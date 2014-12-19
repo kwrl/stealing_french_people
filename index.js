@@ -3,10 +3,10 @@ var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('scraping_france', 'scraper', 'password', {
+var sequelize = new Sequelize('scraping_france', 'scraper', 'asd123ert', {
     dialect : "mysql",
     port : 3306,
-    host : "10.0.0.48"
+    host : "localhost"
 });
 
 var app = express();
@@ -43,6 +43,7 @@ function getSecondURL(url) {
 							person.extra = $(".texte_std2").text();
 							if(person.extra!='' && person.fullname!='') {
 								console.log(person);
+								save_person(person);
 							}
 						});
 						break;
@@ -86,17 +87,6 @@ sequelize
             } else {
                 console.log("Synchronization successful");
             }
-            Person.create({
-                fullname : "Jesus Christ",
-                parents : "Jahova",
-                extra : "Never dies"
-            }).complete(function(err, person) {
-                if(err) {
-                    console.log("Jesus failed");
-                } else {
-                    console.log("Jesus added.");
-                }
-            });
     });
 
 function save_person(person) {
