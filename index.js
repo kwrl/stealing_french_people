@@ -2,7 +2,6 @@ var express = require('express');
 var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
-var mongoose = require('mongoose');
 var app = express();
 
 var base_url = "http://genearmor.cotesdarmor.fr/moteur/";
@@ -18,9 +17,6 @@ var form = {
     TYPE : "T",
     TRI : "A"
 }
-
-//mongoose.connect("mongodb://localhost/test");
-//var Person = mongoose.model('Person', { fullname : String, parents: String, extra : String });
 
 app.get('/scrape', function(req, res) {
     request.post(post_url, {form : form},
@@ -46,10 +42,6 @@ app.get('/scrape', function(req, res) {
                                         if(person.extra!='' && person.fullname!='') {
                                             console.log(person);
                                         }
-                                        /*new Person(person).save(function(error) {
-                                            console.log(error);
-                                        });
-                                        */
                                     });
                                     break;
                                 case 1:
