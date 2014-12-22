@@ -9,33 +9,37 @@
 
 function interpret_line(line) {
     var items = line.split(" ");
-    if(items.length!=3) {
-        console.log("This line failed:\t", line)
-        console.log(items);
-        return null;
+    var names = "";
+    for(var i=2;i<items.length;i++) {
+        names+=items[i]+' ';
     }
     return {
-        last_name : items[0],
-        first_name : items[1],
-        year_of_birth : items[2]
+        year_of_birth : items[0],
+        last_name : items[1],
+        first_name : names,
     };
 }
 
 
 $(document).ready(function() {
-    $("#initiate").click(function(){
-        console.log("CLICK!!");
+    $("#initiate").click(function() {
         var lines = $("#input_data").val().split('\n');
         for(var line in lines) {
-            var person = interpret_line(lines[line]);
-            if(person!=null) {
-                $.post("/search", person)
-                    .success(function(){
-                    }) 
-                    .fail(function(){
-                    });
-                
-            }
+            (function(i) {
+                setTimeout(function() {
+                    var person = interpret_line(lines[i]);
+                    console.log("First name:\t",person.first_name);
+                    console.log("Last name:\t",person.last_name);
+                    console.log("Year of birth:\t",person.year_of_birth);
+                    if(person!=null) {
+                        $.post("/search", person)
+                        .success(function(){
+                        }) 
+                        .fail(function(){
+                        });
+                    }
+                }, 1000*i);
+            }(line));
         }
     });
 });

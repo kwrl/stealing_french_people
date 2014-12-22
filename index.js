@@ -74,7 +74,10 @@ sequelize
 var Person = sequelize.define('Person', {
     fullname : Sequelize.STRING,
     parents : Sequelize.STRING,
-    death: Sequelize.STRING
+    death : { 
+        type : Sequelize.STRING,
+        allowNull : false
+    }
 });
 
 sequelize
