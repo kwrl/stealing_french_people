@@ -3,17 +3,14 @@ $(document).ready(function() {
         var raw = $('#input_data').val();
         var persons = JSON.parse(raw);
         for(var person in persons) {
-            (function(i) {
-                setTimeout(function() {
-                $.post("/add_query", persons[person])
-                    .success(function() {
-                    })
-                    .fail(function() {
-                    });
-                }, 100*i);
-            })(person);
+            $.post("/add_query", persons[person])
+                .success(function() {
+                })
+                .fail(function() {
+                });
         }
     });
+
     $('#search').click(function() {
         $.post('/init_search','')
             .success(function(){
